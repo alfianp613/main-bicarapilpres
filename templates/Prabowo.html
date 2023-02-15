@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='assets/icon/logo-iconn.png')}}">
+    <title>Prabowo Subianto</title>
+    <!-- Custom CSS -->
+    <link href="{{url_for('static', filename='assets/extra-libs/c3/c3.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='assets/libs/chartist/dist/chartist.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css')}}" />
+    <!-- Custom CSS -->
+    <link href="{{url_for('static', filename='dist/css/style.min.css')}}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="plotly-2.16.1.min.js"></script>
+    <script src='https://cdn.plot.ly/plotly-2.16.1.min.js'></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin6">
+            <nav class="navbar top-navbar navbar-expand-md">
+                <div class="navbar-header" data-logobg="skin6">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <div class="navbar-brand">
+                        <!-- Logo icon -->
+                        <a href="/">
+                            <b class="logo-icon">
+                                <!-- Dark Logo icon -->
+                                <img src="{{url_for('static', filename='assets/icon/logo-iconn.png')}}" alt="homepage" class="dark-logo" style="height: 45px;"/>
+                                <!-- Light Logo icon --> 
+                            </b>
+                            <!--End Logo icon -->
+                            <!-- Logo text -->
+                            <span class="logo-text">
+                                <!-- dark Logo text -->
+                                <img src="{{url_for('static', filename='assets/icon/logo-teks.png')}}" alt="homepage" class="dark-logo" style="height: 45px;" />
+                                <!-- Light Logo text -->
+                            </span>
+                        </a>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                            class="ti-more"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items (Membuat search disebelah kanan) -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-left mr-auto ml-3 pl-1">
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <!-- ============================================================== -->
+                        <!-- Navbar Menu -->
+                        <nav class="navbar navbar-expand-lg navbar-light">
+                            <div class="container-fluid">
+                                <a class="navbar-brand" href="/candidate">Candidate</a>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                              </button>
+                            </div>
+                            <div class="container-fluid">
+                                <a class="navbar-brand" href="/anies">Dashboard</a>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                              </button>
+                            </div>
+                            <div class="container-fluid">
+                                <a class="navbar-brand" href="/aboutus">About Us</a>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                              </button>
+                            </div>
+                        </nav>
+                        <!-- Akhir Navbar Menu -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+    </div>
+    <!-- End Sidebar scroll-->
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-7 align-self-center">
+                    <div class="d-flex align-items-center">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb m-0 p-0">
+                                <br>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col" style="color:black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size: 30px;">
+                    <p align="center" style="font-size: 50px;"><b>Dashboard Analisis Calon Kandidat Pilpres 2024</b></p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-6 col-sm-3">
+                        <center>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                              Pilih Calon Kandidat
+                            </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                    <li><a class="dropdown-item" href="/ganjar">Ganjar Pranowo</a></li>
+                                    <li><a class="dropdown-item" href="/prabowo">Prabowo Subianto</a></li>
+                                    <li><a class="dropdown-item" href="/anies">Anies Rasyid Baswedan</a></li>
+                                    <li><a class="dropdown-item" href="/ahy">Agus Harimurti Yudhoyono</a></li>
+                                    <li><a class="dropdown-item" href="/ridwan">Mochamad Ridwan Kamil</a></li>
+                                </ul>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-5" style="margin: auto;">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <center>
+                                    <h4 class="card-title" style="font-size:20px;"><b>H. Prabowo Subianto Djojohadikusumo</b></h4>
+                                </center>
+                            </div>
+                            <div class="row">
+                                <div class="col-5" style="margin: auto;">
+                                    <center>
+                                        <img src="{{url_for('static', filename='./assets/images/Prabowo NO BG.png')}}" width="400" height="40" class="figure-img img-fluid rounded" alt="Alya">
+                                    </center>
+                                </div>
+                                <div class="col-7" style="color: black;">
+                                    <p align="justify">
+                                        <ul>
+                                            <li><b>Tempat tanggal lahir:</b>17 Oktober 1951, Jakarta, Indonesia</li>
+                                            <li><b>Partai Politik : </b>Partai Gerindra</li>
+                                            <li><b>Almamater: </b>AKABRI</li>
+                                            <li><b>Karir Politik:</b></li>
+                                            <dd>- Pendiri Partai Gerindra (2008)</dd>
+                                            <dd>- Menteri Pertahanan (2019 - Now ) </dd>
+                                        </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p align="center">
+                    Terakhir diperbarui pada {{time}}
+                </p>
+            </div>
+            <div class="row">
+                <div class="col" style="color:black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size: 30px;">
+                    <p align="center" style="font-size: 23px;"><b>Apa Kata Mereka Tentang Prabowo Subianto?</b></p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-6 col-sm-3">
+                        <center>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                              Waktu
+                            </button>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                    <li id="T1" onclick="gantiGambar(this.id)"><a class="dropdown-item">All time</a></li>
+                                    <li id="T2" onclick="gantiGambar(this.id)"><a class=" dropdown-item">14 Hari</a></li>
+                                    <li id="T3" onclick="gantiGambar(this.id)"><a class="dropdown-item">7 Hari</a></li>
+                                    <li id="T4" onclick="gantiGambar(this.id)"><a class=" dropdown-item">Hari ini</a></li>
+                                </ul>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            <!-- *************************************************************** -->
+
+            <!-- Start Sentiment Analysis etc Section -->
+            <!-- *************************************************************** -->
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <center>
+                                <h4 class="card-title" style="font-size:30px;"><b>Sentiment Analysis</b></h4>
+                                <div id="myDiv" style="display: block;">
+                                </div>
+                                <div id="myDiv2" style="display: none;">
+                                </div>
+                                <div id="myDiv3" style="display: none;">
+                                </div>
+                                <div id="myDiv4" style="display: none;">
+                                </div>
+                                <script>
+                                    axios({
+                                        method: 'post',
+                                        url: 'http://127.0.0.1:5000/api/sentiment',
+                                        data: {
+                                            status: "minta datanya dong",
+                                            "calon": "prabowo"
+                                        }
+                                    }).then(function(response) {
+                                        var ultimateColors = ['rgb(56, 75, 126)', 'rgb(169, 169, 169)', 'rgb(175, 49, 35)'];
+                                        var alltime = response.data["All time"];
+                                        pie = document.getElementById('myDiv');
+                                        var data = [{
+                                            values: [alltime["positive"], alltime["neutral"], alltime["negative"]],
+                                            labels: ['Positif', 'Netral', 'Negatif'],
+                                            type: 'pie',
+                                            marker: {
+                                                colors: ultimateColors
+                                            }
+                                        }];
+                                        var layout = {
+                                            height: 400,
+                                            width: 500
+                                        };
+                                        Plotly.newPlot(pie, data, layout);
+
+                                        var hari14 = response.data["14 Hari"];
+                                        pie2 = document.getElementById('myDiv2');
+                                        var data2 = [{
+                                            values: [hari14["positive"], hari14["neutral"], hari14["negative"]],
+                                            labels: ['Positif', 'Netral', 'Negatif'],
+                                            type: 'pie',
+                                            marker: {
+                                                colors: ultimateColors
+                                            }
+                                        }];
+                                        var layout = {
+                                            height: 400,
+                                            width: 500
+                                        };
+                                        Plotly.newPlot(pie2, data2, layout);
+
+                                        var hari7 = response.data["7 Hari"];
+                                        pie3 = document.getElementById('myDiv3');
+                                        var data3 = [{
+                                            values: [hari7["positive"], hari7["neutral"], hari7["negative"]],
+                                            labels: ['Positif', 'Netral', 'Negatif'],
+                                            type: 'pie',
+                                            marker: {
+                                                colors: ultimateColors
+                                            }
+                                        }];
+                                        var layout = {
+                                            height: 400,
+                                            width: 500
+                                        };
+                                        Plotly.newPlot(pie3, data3, layout);
+
+                                        var now = response.data["Hari ini"];
+                                        pie4 = document.getElementById('myDiv4');
+                                        var data4 = [{
+                                            values: [now["positive"], now["neutral"], now["negative"]],
+                                            labels: ['Positif', 'Netral', 'Negatif'],
+                                            type: 'pie',
+                                            marker: {
+                                                colors: ultimateColors
+                                            }
+                                        }];
+                                        var layout = {
+                                            height: 400,
+                                            width: 500
+                                        };
+                                        Plotly.newPlot(pie4, data4, layout);
+                                    });
+                                </script>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <!-- WordCloud Sentimen-->
+                <div class="col-sm-12 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <center>
+                                <h4 class="card-title" style="font-size: 30px;"><b>WordCloud</b></h4>
+                                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                    <button type="button" class="btn btn-danger" onclick="negatif() " id="btn ">Negatif</button>
+                                    <button type="button" class="btn btn-success" onclick="positif() " id="btn ">Positif</button>
+                                    <button type="button" class="btn btn-warning" onclick="netral() " id="btn ">All</button>
+                                </div>
+                                <br>
+                                <!-- <div>
+                                    <img src="{{url_for('static', filename='Wordcloud/Wordcloud_mention_ahy.jpg')}}" class="figure-img img-fluid rounded" style="width=400px;height=100px;" alt="Alya">
+                                </div> -->
+                                <div id="div_netral " class="figure-img img-fluid rounded" style="display: block;">
+                                    <img src="{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_All time_neu.jpg')}}" style="width:90%; height:90%" id="gambarNetral" alt=" ">
+                                </div>
+                                <div id="div_positif " class="figure-img img-fluid rounded" style="display: none;">
+                                    <img src="{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_All time_pos.jpg')}}" style="width:90%; height:90%" id="gambarPositif" alt=" ">
+                                </div>
+                                <div id="div_negatif " class="figure-img img-fluid rounded" style="display: none;">
+                                    <img src="{{url_for('static', filename='assets/Wordcloud/ahy/wordcloud_mention_prabowo_All time_neg.jpg')}}" style="width:90%; height:90%" id="gambarNegatif" alt=" ">
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col" style="color:black; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size: 30px;">
+                <p align="center" style="font-size: 23px;"><b>Apa yang sering Prabowo Subianto Bahas di Akun Twitternya?</b></p>
+                <center>
+                    <a class="tombol" href="https://twitter.com/prabowo"><i class="fab fa-twitter"style='color:#08b0e7;font-size: 35px;'></i><a href="https://twitter.com/prabowo" class="stretched-link" style="font-size: 22px;">@prabowo</a></a>
+                </center>
+            </div>
+        </div>
+
+        <!-- Topic Modelling -->
+        <div class="row">
+            <div class="col-10" style="margin:auto;">
+                <div class="card">
+                    <div class="card-body">
+                        <center>
+                            <h4 class="card-title mb-0" style="font-size: 30px; margin: auto;"><b>Topic Modelling</b></h4>
+                            <iframe src="{{url_for('static', filename='iframeTM/lda_prabowo.html')}}" style="border:none;margin: auto; width:2000px ; height: 700px" title="Iframe Example"></iframe>
+                            <!-- <img src="{{url_for('static', filename='./assets/images/Topic Modelling.png')}}" width="400" height="400" class="figure-img img-fluid rounded" alt="Alya"> -->
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- WordCloud tweet kandidat -->
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <center>
+                            <h4 class="card-title" style="font-size:30px;"><b>WordCloud</b></h4>
+                            <h5 class="card-title" style="font-size:15px;">WordCloud from Prabowo Tweets</h5>
+                            <img src="{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_profile_prabowo.jpg')}}" class="figure-img img-fluid rounded" style="height:360px; width:700px;" alt="Alya ">
+                        </center>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <center>
+                            <h4 class="card-title" style="font-size: 30px;"><b>Recent Tweets</b></h4>
+                            <a class="twitter-timeline" data-width="700" data-height="360" href="https://twitter.com/prabowo?ref_src=twsrc%5Etfw">Tweets by prabowo</a>
+                            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <footer class="footer text-center text-muted">
+        Copyright© 2022 <a href="https://www.instagram.com/bicarapilpres/">BicaraPilpres</a>
+    </footer>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="{{url_for('static', filename='assets/libs/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/libs/popper.js/dist/umd/popper.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/libs/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <!-- apps -->
+    <!-- apps -->
+    <script src="{{url_for('static', filename='dist/js/app-style-switcher.js')}}"></script>
+    <script src="{{url_for('static', filename='dist/js/feather.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='dist/js/sidebarmenu.js')}}"></script>
+    <!--Custom JavaScript -->
+    <script src="{{url_for('static', filename='dist/js/custom.min.js')}}"></script>
+    <!--This page JavaScript -->
+    <script src="{{url_for('static', filename='assets/extra-libs/c3/d3.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/extra-libs/c3/c3.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/libs/chartist/dist/chartist.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js')}}"></script>
+    <script src="{{url_for('static', filename='dist/js/pages/dashboards/dashboard1.min.js')}}"></script>
+    <script>
+        function netral() {
+            var x = document.getElementById("div_netral ");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            }
+            var y = document.getElementById("div_positif ");
+            if (y.style.display === "block") {
+                y.style.display = "none";
+            }
+            var z = document.getElementById("div_negatif ");
+            if (z.style.display === "block") {
+                z.style.display = "none";
+            }
+        }
+
+        function positif() {
+            var x = document.getElementById("div_netral ");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            }
+            var y = document.getElementById("div_positif ");
+            if (y.style.display === "none") {
+                y.style.display = "block";
+            }
+            var z = document.getElementById("div_negatif ");
+            if (z.style.display === "block") {
+                z.style.display = "none";
+            }
+        }
+
+        function negatif() {
+            var x = document.getElementById("div_netral ");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            }
+            var y = document.getElementById("div_positif ");
+            if (y.style.display === "block") {
+                y.style.display = "none";
+            }
+            var z = document.getElementById("div_negatif ");
+            if (z.style.display === "none") {
+                z.style.display = "block";
+            }
+        }
+
+        function gantiGambar(gantiGambar) {
+            if (gantiGambar === "T1") {
+                document.getElementById("gambarNetral").src = "{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_All time_neu.jpg')}}";
+                document.getElementById("gambarPositif").src = "{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_All time_pos.jpg')}}";
+                document.getElementById("gambarNegatif").src = "{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_All time_neg.jpg')}}";
+                var x = document.getElementById("myDiv");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                }
+                var y = document.getElementById("myDiv2");
+                if (y.style.display === "block") {
+                    y.style.display = "none";
+                }
+                var z = document.getElementById("myDiv3");
+                if (z.style.display === "block") {
+                    z.style.display = "none";
+                }
+                var za = document.getElementById("myDiv4");
+                if (za.style.display === "block") {
+                    za.style.display = "none";
+                }
+            } else if (gantiGambar === "T2") {
+                document.getElementById("gambarNetral").src = "{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_14 Hari_neu.jpg')}}";
+                document.getElementById("gambarPositif").src = "{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_14 Hari_pos.jpg')}}";
+                document.getElementById("gambarNegatif").src = "{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_14 Hari_neg.jpg')}}";
+                var x = document.getElementById("myDiv");
+                if (x.style.display === "block") {
+                    x.style.display = "none";
+                }
+                var y = document.getElementById("myDiv2");
+                if (y.style.display === "none") {
+                    y.style.display = "block";
+                }
+                var z = document.getElementById("myDiv3");
+                if (z.style.display === "block") {
+                    z.style.display = "none";
+                }
+                var za = document.getElementById("myDiv4");
+                if (za.style.display === "block") {
+                    za.style.display = "none";
+                }
+            } else if (gantiGambar === "T3") {
+                document.getElementById("gambarNetral").src = "{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_7 Hari_neu.jpg')}}";
+                document.getElementById("gambarPositif").src = "{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_7 Hari_pos.jpg')}}";
+                document.getElementById("gambarNegatif").src = "{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_7 Hari_neg.jpg')}}";
+                var x = document.getElementById("myDiv");
+                if (x.style.display === "block") {
+                    x.style.display = "none";
+                }
+                var y = document.getElementById("myDiv2");
+                if (y.style.display === "block") {
+                    y.style.display = "none";
+                }
+                var z = document.getElementById("myDiv3");
+                if (z.style.display === "none") {
+                    z.style.display = "block";
+                }
+                var za = document.getElementById("myDiv4");
+                if (za.style.display === "block") {
+                    za.style.display = "none";
+                }
+            } else if (gantiGambar === "T4") {
+                document.getElementById("gambarNetral").src = "{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_Hari ini_neu.jpg')}}";
+                document.getElementById("gambarPositif").src = "{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_Hari ini_pos.jpg')}}";
+                document.getElementById("gambarNegatif").src = "{{url_for('static', filename='assets/Wordcloud/prabowo/wordcloud_mention_prabowo_Hari ini_neg.jpg')}}";
+                var x = document.getElementById("myDiv");
+                if (x.style.display === "block") {
+                    x.style.display = "none";
+                }
+                var y = document.getElementById("myDiv2");
+                if (y.style.display === "block") {
+                    y.style.display = "none";
+                }
+                var z = document.getElementById("myDiv3");
+                if (z.style.display === "block") {
+                    z.style.display = "none";
+                }
+                var za = document.getElementById("myDiv4");
+                if (za.style.display === "none") {
+                    za.style.display = "block";
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
