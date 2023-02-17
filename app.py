@@ -21,23 +21,23 @@ def candidate():
     return render_template('Infopedia Kandidat.html')
 @app.route('/anies')
 def anies():
-    times = req('anies','http://127.0.0.1:5000/')
+    times = req('anies','http://143.198.206.37:5000/')
     return render_template('Anies.html',time=times)
 @app.route('/ahy')
 def ahy():
-    times = req('ahy','http://127.0.0.1:5000/')
+    times = req('ahy','http://143.198.206.37:5000/')
     return render_template('AHY.html',time=times)
 @app.route('/ganjar')
 def ganjar():
-    times = req('ganjar','http://127.0.0.1:5000/')
+    times = req('ganjar','http://143.198.206.37:5000/')
     return render_template('Ganjar.html',time=times)
 @app.route('/prabowo')
 def prabowo():
-    times = req('prabowo','http://127.0.0.1:5000/')
+    times = req('prabowo','http://143.198.206.37:5000/')
     return render_template('Prabowo.html',time=times)
 @app.route('/ridwan')
 def rk():
-    times = req('rk','http://127.0.0.1:5000/')
+    times = req('rk','http://143.198.206.37:5000/')
     return render_template('Ridwan Kamil.html',time=times)
 
 
